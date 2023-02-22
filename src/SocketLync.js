@@ -170,7 +170,7 @@ class SocketLync {
 	}
 
 	socketId() {
-		return this.socket.id;
+		return this.socket?.id;
 	}
 
 	disconnect() {
