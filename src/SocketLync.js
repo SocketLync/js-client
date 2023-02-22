@@ -23,16 +23,24 @@ class SocketLync {
 
 	connect() {
 		if (this.socket) {
-			// TODO check if connected, otherwise connect
+			if (!this.socket.connected) {
+				this.socket.connect();
+			}
 
 			return this.socket;
 		}
 
 		const io = this.getSocketIO();
 		this.socket = io(this.options.host, this.options);
+		this.socket.connect();
 
-		// on reconnect, subscribe channels again.
+		// subscribe all channels on reconnect
 		this.socket.on('reconnect', () => {
+			Object.values(this.channels).forEach((channel) => channel.subscribe());
+		});
+
+		// subscribe channels after connect (required if the socket client was initialized after a listen)
+		this.socket.on('connect', () => {
 			Object.values(this.channels).forEach((channel) => channel.subscribe());
 		});
 
