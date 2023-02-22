@@ -1,18 +1,14 @@
 import terser from '@rollup/plugin-terser';
-import vue from 'rollup-plugin-vue';
 
 function createEntry({ minify = false, format, file }) {
 	const entry = {
 		input: './src/index.js',
-		external: ['vue'],
 		output: {
 			name: 'SocketLync',
 			format,
 			file,
 		},
-		plugins: [
-			vue(),
-		],
+		plugins: [],
 	};
 
 	if (minify) {
