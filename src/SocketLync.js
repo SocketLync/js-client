@@ -7,7 +7,14 @@ class SocketLync {
 		this.options = options;
 		this.channels = {};
 		this.socket = null;
-		this.connect();
+
+		if (typeof this.options.autoConnect !== 'boolean') {
+			this.options.autoConnect = true;
+		}
+
+		if (this.options.autoConnect) {
+			this.connect();
+		}
 
 		if (!this.options.withoutInterceptors) {
 			this.registerInterceptors();
