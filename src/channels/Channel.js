@@ -67,11 +67,12 @@ class Channel {
 		}
 
 		if (!callback || this.listeners[event].length === 0) {
-			if (this.events[event]) {
-				delete this.events[event];
-			}
-
+			delete this.events[event];
 			delete this.listeners[event];
+
+			if (this.socketLync.options.autoLeave && Object.keys(this.listeners).length === 0) {
+				this.socketLync.leaveChannel(this.name);
+			}
 		}
 	}
 

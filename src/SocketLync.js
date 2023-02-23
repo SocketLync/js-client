@@ -3,10 +3,12 @@ import PresenceChannel from './channels/PresenceChannel';
 import PrivateChannel from './channels/PrivateChannel';
 
 class SocketLync {
-	constructor(options) {
-		this.options = options;
+	constructor(options = {}) {
+		this.options = options || {};
 		this.channels = {};
 		this.socket = null;
+
+		this.options.socketOptions = this.options.socketOptions || {};
 
 		if (typeof this.options.autoConnect !== 'boolean') {
 			this.options.autoConnect = true;
@@ -31,7 +33,7 @@ class SocketLync {
 		}
 
 		const io = this.getSocketIO();
-		this.socket = io(this.options.host, this.options);
+		this.socket = io(this.options.socketOptions.host, this.options.socketOptions);
 		this.socket.connect();
 
 		// subscribe all channels on reconnect
@@ -122,6 +124,18 @@ class SocketLync {
 
 			return config;
 		});
+	}
+
+	hasChannel(name) {
+		return this.channels[name] || null;
+	}
+
+	hasPrivateChannel(name) {
+		return this.channels[`private-${name}`] || null;
+	}
+
+	hasPresenceChannel(name) {
+		return this.channels[`presence-${name}`] || null;
 	}
 
 	/**
