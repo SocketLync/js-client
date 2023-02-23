@@ -30,13 +30,13 @@ class Channel {
 	}
 
 	stopListening(event, callback) {
-		this.unbindEvent(event, callback);
+		this.unbindEvent('event:' + event, callback);
 
 		return this;
 	}
 
 	stopListeningToAll(callback) {
-		this.unbind(callback);
+		this.unbindEvent('event:*', callback);
 
 		return this;
 	}
