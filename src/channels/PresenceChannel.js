@@ -1,6 +1,6 @@
-import Channel from './Channel';
+import PrivateChannel from './PrivateChannel';
 
-class PresenceChannel extends Channel {
+class PresenceChannel extends PrivateChannel {
 	here(callback) {
 		this.on('subscribed', callback);
 

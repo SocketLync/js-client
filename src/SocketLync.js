@@ -51,7 +51,8 @@ class SocketLync {
 		});
 		this.socket.on('push:message', (event) => {
 			if (this.channels[event.channel]) {
-				this.channels[event.channel].emit('event:' + event.event, event.data);
+				this.channels[event.channel].emit(`event:${event.event}`, event.data);
+				this.channels[event.channel].emit('event:*', event.event, event.data);
 			}
 		});
 

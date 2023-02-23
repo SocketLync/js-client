@@ -5,10 +5,19 @@ class PrivateChannel extends Channel {
 		this.socketLync.subscribe(this.name, true);
 	}
 
-	whisper() {
-		// TODO implement
+	whisper(event, data = {}) {
+		this.socketLync.socket.emit('push:message', {
+			channel: this.name,
+			event,
+			data,
+		});
 
-		console.warn('This method is not yet implemented.');
+		return this;
+	}
+
+	listenForWhisper(event, callback) {
+		this.on(`event:client-${event}`, callback);
+
 		return this;
 	}
 }

@@ -24,15 +24,19 @@ class Channel {
 	}
 
 	listenToAll(callback) {
-		// TODO implement
-		console.error('Not yet implemented.');
+		this.on('event:*', callback);
 
 		return this;
 	}
 
 	stopListening(event, callback) {
-		// TODO implement
-		console.error('Not yet implemented.');
+		this.unbindEvent(event, callback);
+
+		return this;
+	}
+
+	stopListeningToAll(callback) {
+		this.unbind(callback);
 
 		return this;
 	}
@@ -49,8 +53,10 @@ class Channel {
 		return this;
 	}
 
-	unbind() {
-		Object.keys(this.events).forEach((event) => this.unbindEvent(event));
+	unbind(callback) {
+		Object.keys(this.events).forEach((event) => this.unbindEvent(event, callback));
+
+		return this;
 	}
 
 	unbindEvent(event, callback) {
