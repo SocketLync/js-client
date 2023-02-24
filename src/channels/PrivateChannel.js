@@ -8,7 +8,7 @@ class PrivateChannel extends Channel {
 	whisper(event, data = {}) {
 		this.socketLync.socket.emit('push:message', {
 			channel: this.name,
-			event,
+			event: `client-${event}`,
 			data,
 		});
 
